@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        title WoodyJS Sample
+        script(src="gen-js/hello_svc.js")
+        script(src="woody/thrift.js")
+        script().
+            var transport = new Thrift.TXHRTransport("/hello");
+            var protocol = new Thrift.TJSONProtocol(transport);
+            var client = new hello_svcClient(protocol);
+
+            var test = function () {
+                client.get_message("Дратути", function (result) {
+                    console.log(result);
+                });
+            }
+    body
