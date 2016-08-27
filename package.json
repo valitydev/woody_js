@@ -8,11 +8,16 @@
   },
   "author": "rbkmoney",
   "devDependencies": {
+    "browserify": "^13.1.0",
+    "express": "^4.14.0",
+    "express-http-proxy": "^0.9.1",
     "gulp": "^3.9.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-livereload": "^3.8.1",
+    "gulp-eslint": "^3.0.1",
     "gulp-nodemon": "^2.1.0",
-    "gulp-pug": "^3.0.4"
+    "gulp-pug": "^3.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
     "thrift": "^0.9.3"
