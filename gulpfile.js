@@ -1,6 +1,5 @@
 const gulp = require('gulp');
 const pug = require('gulp-pug');
-const connect = require('gulp-connect');
 const nodemon = require('gulp-nodemon');
 const eslint = require('gulp-eslint');
 const uglify = require('gulp-uglify');
@@ -18,7 +17,7 @@ gulp.task('lint', () => {
         .pipe(eslint.format());
 });
 
-gulp.task('browserify', ['lint'], () => {
+gulp.task('browserify', () => {
     return browserify({
         entries: 'src/bootstrap.js',
         extensions: ['.js'],
@@ -66,5 +65,5 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('build', ['uglify']);
+gulp.task('build', ['browserify']);
 gulp.task('default', ['browserify', 'index', 'watch', 'client', 'server']);

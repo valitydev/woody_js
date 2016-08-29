@@ -5,8 +5,9 @@ var app = express();
 app.use(proxy('http://localhost:8022', {
     filter: function (req, res) {
         return req.method == 'POST';
-    }
-    // preserveHostHdr: true
+    },
+    reqAsBuffer: true,
+    reqBodyEncoding: null
 }));
 app.use(express.static('dist'));
 
