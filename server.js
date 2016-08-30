@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 
 app.use(proxy('http://localhost:8022', {
-    filter: function (req, res) {
+    filter: function (req) {
         return req.method == 'POST';
     },
     reqAsBuffer: true,

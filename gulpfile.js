@@ -12,7 +12,7 @@ const config = {
 };
 
 gulp.task('lint', () => {
-    return gulp.src('src/**/*.js')
+    return gulp.src(['src/**/*.js', '!src/gen-nodejs/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format());
 });
@@ -65,5 +65,5 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('build', ['browserify']);
+gulp.task('build', ['uglify']);
 gulp.task('default', ['browserify', 'index', 'watch', 'client', 'server']);
