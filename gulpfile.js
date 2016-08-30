@@ -6,6 +6,7 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
+const header = require('gulp-header');
 
 const config = {
     dist: 'dist'
@@ -24,6 +25,9 @@ gulp.task('browserify', () => {
         debug: true
     }).bundle()
         .pipe(source('woody.js'))
+        .pipe(header('/* Build time: ${datetime} */ \n', {
+            datetime: new Date()
+        }))
         .pipe(gulp.dest(config.dist));
 });
 
@@ -31,6 +35,9 @@ gulp.task('uglify', ['browserify'], () => {
     return gulp.src(`${config.dist}/woody.js`)
         .pipe(rename('woody.min.js'))
         .pipe(uglify())
+        .pipe(header('/* Build time: ${datetime} */ \n', {
+            datetime: new Date()
+        }))
         .pipe(gulp.dest(config.dist));
 });
 
