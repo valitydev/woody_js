@@ -17,7 +17,7 @@
  * under the License.
  */
 var util = require('util');
-var http = require('http');
+var http = require('stream-http');
 var https = require('https');
 var EventEmitter = require('events').EventEmitter;
 var thrift = require('./thrift');

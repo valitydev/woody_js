@@ -18,6 +18,7 @@
     "q": "1.0.x",
     "ws": "~0.4.32",
     "base-x": "^1.0.4",
+    "stream-http": "^2.3.1",
     "flake-idgen": "^1.1.0"
   },
   "devDependencies": {
