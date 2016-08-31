@@ -1,12 +1,18 @@
 {
   "name": "woody_js",
   "version": "1.0.0",
-  "description": "",
+  "description": "Woody implementation for js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rbkmoney/woody_js.git"
   },
   "author": "rbkmoney",
+  "scripts": {
+    "build": "./node_modules/.bin/gulp build"
+  },
+  "license": "",
+  "private": true,
+  "main": "src/bootstrap.js",
   "dependencies": {
     "node-int64": "~0.3.0",
     "q": "1.0.x",

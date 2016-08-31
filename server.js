@@ -1,14 +1,17 @@
-var proxy = require('express-http-proxy');
-var express = require('express');
-var app = express();
+const proxy = require('express-http-proxy');
+const express = require('express');
+const app = express();
 
-app.use(proxy('http://localhost:8022', {
+const dominantUrl = 'http://localhost:8022';
+const staticFolder = 'dist';
+
+app.use(proxy(dominantUrl, {
     filter: function (req) {
-        return req.method == 'POST';
+        return req.method === 'POST';
     },
     reqAsBuffer: true,
     reqBodyEncoding: null
 }));
-app.use(express.static('dist'));
+app.use(express.static(staticFolder));
 
 app.listen(9000);
