@@ -1,10 +1,10 @@
-var httpConnection = require('./thrift/http_connection');
-var TBufferedTransport = require('./thrift/buffered_transport');
-var TBinaryProtocol = require('./thrift/binary_protocol');
+var httpConnection = require('../src/client/http_connection');
+var TBufferedTransport = require('../src/client/buffered_transport');
+var TBinaryProtocol = require('../src/client/binary_protocol');
 var Repository = require('./gen-nodejs/Repository');
 
 var host = 'localhost';
-var port = 8080;
+var port = 9000;
 
 (function () {
     var connection = httpConnection.createHttpConnection(host, port, {

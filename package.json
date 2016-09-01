@@ -1,18 +1,14 @@
 {
   "name": "woody_js",
   "version": "1.0.0",
-  "description": "Woody implementation for js",
+  "description": "Woody client side implementation for js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rbkmoney/woody_js.git"
   },
   "author": "rbkmoney",
-  "scripts": {
-    "build": "./node_modules/.bin/gulp build"
-  },
   "license": "",
   "private": true,
-  "main": "src/bootstrap.js",
   "dependencies": {
     "node-int64": "~0.3.0",
     "q": "1.0.x",
@@ -27,7 +23,6 @@
     "express-http-proxy": "^0.9.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
-    "gulp-header": "^1.8.8",
     "gulp-nodemon": "^2.1.0",
     "gulp-pug": "^3.0.4",
     "gulp-rename": "^1.2.2",

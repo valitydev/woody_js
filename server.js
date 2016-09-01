@@ -2,10 +2,10 @@ const proxy = require('express-http-proxy');
 const express = require('express');
 const app = express();
 
-const dominantUrl = 'http://localhost:8022';
+const url = 'http://localhost:8022';
 const staticFolder = 'dist';
 
-app.use(proxy(dominantUrl, {
+app.use(proxy(url, {
     filter: function (req) {
         return req.method === 'POST';
     },
