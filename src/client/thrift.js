@@ -52,7 +52,7 @@ function TException(message) {
     Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
     this.message = message;
-};
+}
 util.inherits(TException, Error);
 
 var TApplicationExceptionType = exports.TApplicationExceptionType = {
@@ -77,11 +77,10 @@ function TApplicationException(type, message) {
     this.type = type || TApplicationExceptionType.UNKNOWN;
     this.name = this.constructor.name;
     this.message = message;
-};
+}
 util.inherits(TApplicationException, TException);
 
 TApplicationException.prototype.read = function (input) {
-    var ftype;
     var ret = input.readStructBegin('TApplicationException');
 
     while (1) {
@@ -134,17 +133,6 @@ TApplicationException.prototype.write = function (output) {
     output.writeStructEnd();
 };
 
-var TProtocolExceptionType = exports.TProtocolExceptionType = {
-    UNKNOWN: 0,
-    INVALID_DATA: 1,
-    NEGATIVE_SIZE: 2,
-    SIZE_LIMIT: 3,
-    BAD_VERSION: 4,
-    NOT_IMPLEMENTED: 5,
-    DEPTH_LIMIT: 6
-};
-
-
 exports.TProtocolException = TProtocolException;
 
 function TProtocolException(type, message) {
@@ -153,7 +141,7 @@ function TProtocolException(type, message) {
     this.name = this.constructor.name;
     this.type = type;
     this.message = message;
-};
+}
 util.inherits(TProtocolException, Error);
 
 exports.objectLength = function (obj) {

@@ -37,7 +37,7 @@ function TBinaryProtocol(trans, strictRead, strictWrite) {
     this.trans = trans;
     this.strictRead = (strictRead !== undefined ? strictRead : false);
     this.strictWrite = (strictWrite !== undefined ? strictWrite : true);
-};
+}
 
 TBinaryProtocol.prototype.flush = function () {
     return this.trans.flush();
@@ -71,7 +71,7 @@ TBinaryProtocol.prototype.writeMessageEnd = function () {
     }
 };
 
-TBinaryProtocol.prototype.writeStructBegin = function (name) {
+TBinaryProtocol.prototype.writeStructBegin = function () {
 };
 
 TBinaryProtocol.prototype.writeStructEnd = function () {
@@ -177,15 +177,14 @@ TBinaryProtocol.prototype.readMessageBegin = function () {
     if (sz < 0) {
         var version = sz & VERSION_MASK;
         if (version != VERSION_1) {
-            console.log("BAD: " + version);
-            throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.BAD_VERSION, "Bad version in readMessageBegin: " + sz);
+            throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.BAD_VERSION, 'Bad version in readMessageBegin: ' + sz);
         }
         type = sz & TYPE_MASK;
         name = this.readString();
         seqid = this.readI32();
     } else {
         if (this.strictRead) {
-            throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.BAD_VERSION, "No protocol version header");
+            throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.BAD_VERSION, 'No protocol version header');
         }
         name = this.trans.read(sz);
         type = this.readByte();
@@ -280,7 +279,7 @@ TBinaryProtocol.prototype.readBinary = function () {
     }
 
     if (len < 0) {
-        throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.NEGATIVE_SIZE, "Negative binary size");
+        throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.NEGATIVE_SIZE, 'Negative binary size');
     }
     return this.trans.read(len);
 };
@@ -288,11 +287,11 @@ TBinaryProtocol.prototype.readBinary = function () {
 TBinaryProtocol.prototype.readString = function () {
     var len = this.readI32();
     if (len === 0) {
-        return "";
+        return '';
     }
 
     if (len < 0) {
-        throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.NEGATIVE_SIZE, "Negative string size");
+        throw new Thrift.TProtocolException(Thrift.TProtocolExceptionType.NEGATIVE_SIZE, 'Negative string size');
     }
     return this.trans.readString(len);
 };
@@ -361,6 +360,6 @@ TBinaryProtocol.prototype.skip = function (type) {
             this.readListEnd();
             break;
         default:
-            throw new Error("Invalid type: " + type);
+            throw new Error('Invalid type: ' + type);
     }
 };

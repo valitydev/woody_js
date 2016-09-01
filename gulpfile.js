@@ -17,7 +17,7 @@ gulp.task('lint', () => {
         .pipe(eslint.format());
 });
 
-gulp.task('browserify', () => {
+gulp.task('browserify', ['lint'], () => {
     return browserify({
         entries: 'sample/bootstrap.js',
         extensions: ['.js'],

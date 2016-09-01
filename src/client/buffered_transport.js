@@ -172,4 +172,4 @@ TBufferedTransport.prototype.flush = function () {
 
     this.outBuffers = [];
     this.outCount = 0;
-}
+};
