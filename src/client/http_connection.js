@@ -162,6 +162,7 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
             if (e instanceof InputBufferUnderrunError) {
                 transport_with_data.rollbackPosition();
             } else {
+                self.errorCb(e);
                 throw e;
             }
             self.errorCb(e);
@@ -172,37 +173,43 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
     //Response handler
     //////////////////////////////////////////////////
     this.responseCallback = function (response) {
-        var data = [];
-        var dataLen = 0;
-
         response.on('error', function (e) {
+            self.errorCb(e);
             self.emit('error', e);
         });
 
-        // When running directly under node, chunk will be a buffer,
-        // however, when running in a Browser (e.g. Browserify), chunk
-        // will be a string or an ArrayBuffer.
-        response.on('data', function (chunk) {
-            if ((typeof chunk == 'string') ||
-                (Object.prototype.toString.call(chunk) == '[object Uint8Array]')) {
-                // Wrap ArrayBuffer/string in a Buffer so data[i].copy will work
-                data.push(new Buffer(chunk));
-            } else {
-                data.push(chunk);
-            }
-            dataLen += chunk.length;
-        });
+        if (response.statusCode < 200 || response.statusCode > 299) {
+            self.errorCb(response.statusCode);
+            self.emit('error', response.statusCode);
+        } else {
+            var data = [];
+            var dataLen = 0;
 
-        response.on('end', function () {
-            var buf = new Buffer(dataLen);
-            for (var i = 0, len = data.length, pos = 0; i < len; i++) {
-                data[i].copy(buf, pos);
-                pos += data[i].length;
-            }
-            //Get the receiver function for the transport and
-            //  call it with the buffer
-            self.transport.receiver(decodeCallback)(buf);
-        });
+            // When running directly under node, chunk will be a buffer,
+            // however, when running in a Browser (e.g. Browserify), chunk
+            // will be a string or an ArrayBuffer.
+            response.on('data', function (chunk) {
+                if ((typeof chunk == 'string') ||
+                    (Object.prototype.toString.call(chunk) == '[object Uint8Array]')) {
+                    // Wrap ArrayBuffer/string in a Buffer so data[i].copy will work
+                    data.push(new Buffer(chunk));
+                } else {
+                    data.push(chunk);
+                }
+                dataLen += chunk.length;
+            });
+
+            response.on('end', function () {
+                var buf = new Buffer(dataLen);
+                for (var i = 0, len = data.length, pos = 0; i < len; i++) {
+                    data[i].copy(buf, pos);
+                    pos += data[i].length;
+                }
+                //Get the receiver function for the transport and
+                //  call it with the buffer
+                self.transport.receiver(decodeCallback)(buf);
+            });
+        }
     };
 };
 util.inherits(HttpConnection, EventEmitter);
