@@ -152,10 +152,9 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
                     client['recv_' + header.fname](proto, header.mtype, dummy_seqid);
                 } else {
                     delete client._reqs[dummy_seqid];
-                    self.emit('error',
-                        new thrift.TApplicationException(
-                            thrift.TApplicationExceptionType.WRONG_METHOD_NAME,
-                            'Received a response to an unknown RPC function'));
+                    const WRONG_METHOD_NAME_ERROR = new thrift.TApplicationException(thrift.TApplicationExceptionType.WRONG_METHOD_NAME, 'Received a response to an unknown RPC function');
+                    self.errorCb(WRONG_METHOD_NAME_ERROR);
+                    self.emit('error', WRONG_METHOD_NAME_ERROR);
                 }
             }
         }
@@ -165,6 +164,7 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
             } else {
                 throw e;
             }
+            self.errorCb(e);
         }
     }
 
