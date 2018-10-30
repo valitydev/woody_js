@@ -76,7 +76,7 @@ var flake = new FlakeId();
  * @see {@link createHttpConnection}
  */
 var HttpConnection;
-HttpConnection = exports.HttpConnection = function (host, port, options) {
+HttpConnection = exports.HttpConnection = function (host, port, options, errorCb) {
     //Initialize the emitter base object
     EventEmitter.call(this);
 
@@ -88,6 +88,7 @@ HttpConnection = exports.HttpConnection = function (host, port, options) {
     this.https = this.options.https || false;
     this.transport = this.options.transport || TBufferedTransport;
     this.protocol = this.options.protocol || TBinaryProtocol;
+    this.errorCb = errorCb;
 
     //Prepare Node.js options
     this.nodeOptions = {
@@ -226,6 +227,7 @@ HttpConnection.prototype.write = function (data) {
         https.request(self.nodeOptions, self.responseCallback) :
         http.request(self.nodeOptions, self.responseCallback);
     req.on('error', function (err) {
+        self.errorCb(err);
         self.emit('error', err);
     });
     req.write(data);
@@ -241,8 +243,8 @@ HttpConnection.prototype.write = function (data) {
  * @returns {HttpConnection} The connection object.
  * @see {@link ConnectOptions}
  */
-exports.createHttpConnection = function (host, port, options) {
-    return new HttpConnection(host, port, options);
+exports.createHttpConnection = function (host, port, options, errorCb) {
+    return new HttpConnection(host, port, options, errorCb);
 };
 
 exports.createHttpClient = createClient;
