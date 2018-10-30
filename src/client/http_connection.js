@@ -165,7 +165,6 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
                 self.errorCb(e);
                 throw e;
             }
-            self.errorCb(e);
         }
     }
 
