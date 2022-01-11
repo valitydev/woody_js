@@ -1,19 +1,20 @@
 {
-  "name": "@rbkmoney/woody_js",
+  "name": "@vality/woody",
   "version": "0.1.0",
   "description": "Woody client side implementation for js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rbkmoney/woody_js.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@rbkmoney"
+    "url": "git+https://github.com/valitydev/woody_js.git"
   },
   "main": "dist/connect-client.js",
   "typings": "src/connect-client.d.ts",
   "files": ["dist", "src"],
   "author": "rbkmoney",
-  "license": "",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "clean": "rimraf dist",
