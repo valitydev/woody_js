@@ -202,21 +202,19 @@ copyMap = function (obj, types) {
     }
     var Type = type;
 
-    var result = {}, val;
-    for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-            val = obj[prop];
-            if (type === null) {
-                result[prop] = val;
-            }
-            else if (type === copyMap || type === copyList) {
-                result[prop] = type(val, types.slice(1));
-            }
-            else {
-                result[prop] = new Type(val);
-            }
+    var result = new Map();
+
+    obj.forEach((val, prop) => {
+        if (type === null) {
+            result.set(prop, val);
         }
-    }
+        else if (type === copyMap || type === copyList) {
+            result.set(prop, type(val, types.slice(1)));
+        }
+        else {
+            result.set(prop, new Type(val));
+        }
+    })
     return result;
 };
 
