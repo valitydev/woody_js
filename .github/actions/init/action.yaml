@@ -6,7 +6,7 @@ runs:
         - name: Init NodeJS
           uses: actions/setup-node@v3
           with:
-              node-version: '16.13.0'
+              node-version: '14.21.3'
               cache: 'npm'
         - name: Install Packages
           run: npm i
