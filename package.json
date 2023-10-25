@@ -19,8 +19,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "clean": "rimraf dist",
-    "prepublishOnly": "npm run clean; npm run build"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "babel-core": "6.26.3",
