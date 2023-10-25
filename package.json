@@ -1,6 +1,6 @@
 {
   "name": "@vality/woody",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Woody client side implementation for js",
   "repository": {
     "type": "git",
@@ -8,8 +8,10 @@
   },
   "main": "dist/connect-client.js",
   "typings": "src/connect-client.d.ts",
-  "files": ["dist", "src"],
-  "author": "rbkmoney",
+  "files": [
+    "dist",
+    "src"
+  ],
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public",
@@ -24,9 +26,6 @@
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
-    "base-x": "3.0.4",
-    "flake-idgen": "1.1.0",
-    "moment": "^2.27.0",
     "node-int64": "0.4.0",
     "q": "1.5.x",
     "rimraf": "2.6.2",

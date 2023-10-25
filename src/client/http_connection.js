@@ -19,7 +19,6 @@
 var util = require('util');
 var http = require('stream-http');
 var https = require('https');
-var moment = require('moment');
 var EventEmitter = require('events').EventEmitter;
 var thrift = require('./thrift');
 
@@ -28,10 +27,6 @@ var TBinaryProtocol = require('./binary_protocol');
 var InputBufferUnderrunError = require('./input_buffer_underrun_error');
 
 var createClient = require('./create_client');
-
-var FlakeId = require('flake-idgen');
-var bs64 = require('base-x')('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/');
-var flake = new FlakeId();
 
 /**
  * @class
@@ -226,28 +221,6 @@ HttpConnection.prototype.write = function (data) {
     self.nodeOptions.headers['Content-length'] = data.length;
     self.nodeOptions.headers['Accept'] = 'application/x-thrift';
     self.nodeOptions.headers['Content-Type'] = 'application/x-thrift';
-    
-    var id = bs64.encode(flake.next());
-
-    if(self.options && self.options.deprecatedHeaders === true) {
-        // Deprecated
-        self.nodeOptions.headers['x-rbk-span-id'] = id;
-        self.nodeOptions.headers['x-rbk-parent-id'] = undefined;
-        self.nodeOptions.headers['x-rbk-trace-id'] = id;
-    }
-    self.nodeOptions.headers['woody.span-id'] = id;
-    self.nodeOptions.headers['woody.parent-id'] = undefined;
-    self.nodeOptions.headers['woody.trace-id'] = id;
-
-    if (self.options && self.options.deadlineConfig) {
-        var c = self.options.deadlineConfig;
-        var deadline = moment().add(c.amount, c.unitOfTime).utc().format();
-        if (self.options.deprecatedHeaders === true) {
-            self.nodeOptions.headers['x-rbk-deadline'] = deadline; // Deprecated
-        }
-        self.nodeOptions.headers['woody.deadline'] = deadline;
-    }
-
     var req = (self.https) ?
         https.request(self.nodeOptions, self.responseCallback) :
         http.request(self.nodeOptions, self.responseCallback);
