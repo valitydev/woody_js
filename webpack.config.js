@@ -6,28 +6,29 @@ module.exports = {
     stats: 'errors-only',
     entry: {
         'connect-client': './src/connect-client.js',
-        'thrift': './src/client/gen.js'
+        thrift: './src/client/gen.js',
     },
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js'],
+        fallback: {
+            https: false,
+        },
     },
     module: {
         rules: [
             {
-                test: /\.js$/, use: 'babel-loader',
-                exclude: '/node_modules/'
-            }
-        ]
+                test: /\.js$/,
+                use: 'babel-loader',
+                exclude: '/node_modules/',
+            },
+        ],
     },
-    plugins: [
-        // Ignore all locale files of moment.js
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    ],
     output: {
         path: __dirname + '/dist',
         filename: '[name].js',
-        library: 'woody_js',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    }
+        library: {
+            name: 'woody_js',
+            type: 'umd',
+        },
+    },
 };
