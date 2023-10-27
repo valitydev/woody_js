@@ -11,7 +11,8 @@ module.exports = {
     resolve: {
         extensions: ['.js'],
         fallback: {
-            https: false,
+            https: require.resolve('https-browserify'),
+            http: require.resolve('stream-http'),
         },
     },
     module: {

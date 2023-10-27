@@ -1,6 +1,6 @@
 {
   "name": "@vality/woody",
-  "version": "0.1.2-alpha.2",
+  "version": "0.1.2-alpha.3",
   "description": "Woody client side implementation for js",
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "buffer": "6.0.3",
+    "https-browserify": "1.0.0",
     "node-int64": "0.4.0",
     "q": "1.5.x",
     "rimraf": "2.6.2",
