@@ -1,7 +1,9 @@
 name: PR
+
 on:
   pull_request:
     branches: ['*']
+
 jobs:
   publish:
     name: Publish
