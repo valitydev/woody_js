@@ -18,8 +18,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build-old": "webpack --config webpack.config.js",
-    "build": "vite build --c vite.config.js",
+    "build": "vite build",
     "prettier:check": "prettier \"**\" --list-different --ignore-unknown",
     "prettier:write": "prettier \"**\" --write --ignore-unknown"
   },
