@@ -1,8 +1,15 @@
 import { defineConfig } from 'vite';
 import commonjs from 'vite-plugin-commonjs';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 export default defineConfig({
-    plugins: [commonjs()],
+    plugins: [
+        commonjs(),
+        NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+        }),
+    ],
     build: {
         outDir: 'dist',
         sourcemap: true,
