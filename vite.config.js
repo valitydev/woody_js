@@ -16,7 +16,8 @@ export default defineConfig({
         minify: true,
         lib: {
             entry: './src/connect-client.js',
-            formats: ['es'],
+            formats: ['umd'],
+            name: 'WoodyJs',
             fileName: 'connect-client',
         },
         rollupOptions: {
