@@ -13,6 +13,3 @@ jobs:
       - uses: valitydev/action-frontend/setup@v0.1
       - run: npm ci
       - run: npm run build
-      - uses: valitydev/action-frontend/publish@v0.1
-        with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
