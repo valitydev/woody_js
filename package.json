@@ -1,7 +1,7 @@
 {
   "name": "@vality/woody",
-  "version": "0.1.3-alpha.9",
-  "description": "Woody client side implementation for js",
+  "version": "0.1.3",
+  "description": "Browser-Compatible Node.js Thrift Binary Protocol Connection",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valitydev/woody_js.git"
