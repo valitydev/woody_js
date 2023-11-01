@@ -25,9 +25,5 @@ export default defineConfig({
     },
     resolve: {
         extensions: ['.js'],
-        alias: {
-            https: 'https-browserify',
-            http: 'stream-http',
-        },
     },
 });
