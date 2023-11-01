@@ -18,8 +18,7 @@ export default defineConfig({
         minify: true,
         lib: {
             entry: './src/connect-client.js',
-            formats: ['umd'],
-            name: 'Woody',
+            formats: ['es'],
             fileName: 'connect-client',
         },
     },
