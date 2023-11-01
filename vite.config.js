@@ -1,22 +1,17 @@
 import { defineConfig } from 'vite';
 import commonjs from 'vite-plugin-commonjs';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
-
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
-    plugins: [commonjs()],
-    optimizeDeps: {
-        define: {
-            global: 'globalThis',
-        },
-        plugins: [
-            NodeGlobalsPolyfillPlugin({
+    plugins: [
+        commonjs(),
+        nodePolyfills({
+            globals: {
+                Buffer: true,
                 process: true,
-                buffer: true,
-            }),
-        ],
-    },
+            },
+        }),
+    ],
     build: {
         outDir: 'dist',
         sourcemap: true,
@@ -26,9 +21,6 @@ export default defineConfig({
             formats: ['umd'],
             name: 'Woody',
             fileName: 'connect-client',
-        },
-        rollupOptions: {
-            plugins: [nodePolyfills()],
         },
     },
     resolve: {
