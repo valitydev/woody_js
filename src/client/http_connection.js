@@ -150,7 +150,7 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
                     delete client._reqs[dummy_seqid];
                     const WRONG_METHOD_NAME_ERROR = new thrift.TApplicationException(
                         thrift.TApplicationExceptionType.WRONG_METHOD_NAME,
-                        'Received a response to an unknown RPC function'
+                        'Received a response to an unknown RPC function',
                     );
                     self.errorCb(WRONG_METHOD_NAME_ERROR);
                     self.emit('error', WRONG_METHOD_NAME_ERROR);

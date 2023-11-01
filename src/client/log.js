@@ -18,9 +18,9 @@
  */
 
 module.exports = {
-  'info' : function logInfo() {},
-  'warning' : function logWarning() {},
-  'error' : function logError() {},
-  'debug' : function logDebug() {},
-  'trace' : function logTrace() {}
+    info: function logInfo() {},
+    warning: function logWarning() {},
+    error: function logError() {},
+    debug: function logDebug() {},
+    trace: function logTrace() {},
 };

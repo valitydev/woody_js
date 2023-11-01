@@ -1,5 +1,3 @@
-require('process/browser');
-
 const TBinaryProtocol = require('./client/binary_protocol');
 const TBufferedTransport = require('./client/buffered_transport');
 const httpConnection = require('./client/http_connection');
@@ -13,7 +11,7 @@ export default function connectClient(host, port, path, genClient, options = {},
             protocol: TBinaryProtocol,
             path,
         }),
-        errorCb
+        errorCb,
     );
     return httpConnection.createHttpClient(genClient, connection);
 }

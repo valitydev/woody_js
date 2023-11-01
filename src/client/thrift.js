@@ -18,7 +18,7 @@
  */
 var util = require('util');
 
-var Type = exports.Type = {
+var Type = (exports.Type = {
     STOP: 0,
     VOID: 1,
     BOOL: 2,
@@ -35,14 +35,14 @@ var Type = exports.Type = {
     SET: 14,
     LIST: 15,
     UTF8: 16,
-    UTF16: 17
-};
+    UTF16: 17,
+});
 
 exports.MessageType = {
     CALL: 1,
     REPLY: 2,
     EXCEPTION: 3,
-    ONEWAY: 4
+    ONEWAY: 4,
 };
 
 exports.TException = TException;
@@ -55,7 +55,7 @@ function TException(message) {
 }
 util.inherits(TException, Error);
 
-var TApplicationExceptionType = exports.TApplicationExceptionType = {
+var TApplicationExceptionType = (exports.TApplicationExceptionType = {
     UNKNOWN: 0,
     UNKNOWN_METHOD: 1,
     INVALID_MESSAGE_TYPE: 2,
@@ -66,8 +66,8 @@ var TApplicationExceptionType = exports.TApplicationExceptionType = {
     PROTOCOL_ERROR: 7,
     INVALID_TRANSFORM: 8,
     INVALID_PROTOCOL: 9,
-    UNSUPPORTED_CLIENT_TYPE: 10
-};
+    UNSUPPORTED_CLIENT_TYPE: 10,
+});
 
 exports.TApplicationException = TApplicationException;
 
@@ -85,8 +85,7 @@ TApplicationException.prototype.read = function (input) {
 
     while (1) {
         ret = input.readFieldBegin();
-        if (ret.ftype == Type.STOP)
-            break;
+        if (ret.ftype == Type.STOP) break;
 
         switch (ret.fid) {
             case 1:
@@ -155,7 +154,6 @@ exports.inherits = function (constructor, superConstructor) {
 var copyList, copyMap;
 
 copyList = function (lst, types) {
-
     if (!lst) {
         return lst;
     }
@@ -164,22 +162,22 @@ copyList = function (lst, types) {
 
     if (types.shift === undefined) {
         type = types;
-    }
-    else {
+    } else {
         type = types[0];
     }
     var Type = type;
 
-    var len = lst.length, result = [], i, val;
+    var len = lst.length,
+        result = [],
+        i,
+        val;
     for (i = 0; i < len; i++) {
         val = lst[i];
         if (type === null) {
             result.push(val);
-        }
-        else if (type === copyMap || type === copyList) {
+        } else if (type === copyMap || type === copyList) {
             result.push(type(val, types.slice(1)));
-        }
-        else {
+        } else {
             result.push(new Type(val));
         }
     }
@@ -187,7 +185,6 @@ copyList = function (lst, types) {
 };
 
 copyMap = function (obj, types) {
-
     if (!obj) {
         return obj;
     }
@@ -196,8 +193,7 @@ copyMap = function (obj, types) {
 
     if (types.shift === undefined) {
         type = types;
-    }
-    else {
+    } else {
         type = types[0];
     }
     var Type = type;
@@ -207,14 +203,12 @@ copyMap = function (obj, types) {
     obj.forEach((val, prop) => {
         if (type === null) {
             result.set(prop, val);
-        }
-        else if (type === copyMap || type === copyList) {
+        } else if (type === copyMap || type === copyList) {
             result.set(prop, type(val, types.slice(1)));
-        }
-        else {
+        } else {
             result.set(prop, new Type(val));
         }
-    })
+    });
     return result;
 };
 
