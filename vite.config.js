@@ -12,6 +12,9 @@ export default defineConfig({
             formats: ['es'],
             fileName: 'connect-client',
         },
+        rollupOptions: {
+            external: ['process'],
+        },
     },
     resolve: {
         extensions: ['.js'],
