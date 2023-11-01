@@ -1,9 +1,0 @@
-name: Init
-description: Init
-runs:
-    using: composite
-    steps:
-        - uses: valitydev/action-frontend/setup@v1
-        - name: Install Packages
-          run: npm ci
-          shell: bash
