@@ -3,11 +3,7 @@ description: Init
 runs:
     using: composite
     steps:
-        - name: Init NodeJS
-          uses: actions/setup-node@v3
-          with:
-              node-version: '20.5.1'
-              cache: 'npm'
+        - uses: valitydev/action-frontend/setup@v1
         - name: Install Packages
           run: npm ci
           shell: bash
