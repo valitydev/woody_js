@@ -1,6 +1,6 @@
 {
   "name": "@vality/woody",
-  "version": "0.1.3-alpha.4",
+  "version": "0.1.3-alpha.5",
   "description": "Woody client side implementation for js",
   "repository": {
     "type": "git",
@@ -37,8 +37,10 @@
   "devDependencies": {
     "@babel/preset-env": "7.23.2",
     "@esbuild-plugins/node-globals-polyfill": "0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "0.2.2",
     "babel-core": "6.26.3",
     "babel-loader": "9.1.3",
+    "rollup-plugin-node-polyfills": "0.2.1",
     "vite": "4.5.0",
     "vite-plugin-commonjs": "0.10.0",
     "webpack": "5.89.0",
