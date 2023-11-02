@@ -49,11 +49,10 @@ TBufferedTransport.receiver = function (callback, seqid) {
     };
 };
 
-
 TBufferedTransport.prototype.commitPosition = function () {
     var unreadSize = this.writeCursor - this.readCursor;
-    var bufSize = (unreadSize * 2 > this.defaultReadBufferSize) ?
-    unreadSize * 2 : this.defaultReadBufferSize;
+    var bufSize =
+        unreadSize * 2 > this.defaultReadBufferSize ? unreadSize * 2 : this.defaultReadBufferSize;
     var buf = new Buffer(bufSize);
     if (unreadSize > 0) {
         this.inBuf.copy(buf, 0, this.readCursor, this.writeCursor);
@@ -65,18 +64,16 @@ TBufferedTransport.prototype.commitPosition = function () {
 
 TBufferedTransport.prototype.rollbackPosition = function () {
     this.readCursor = 0;
-}
+};
 
 // TODO: Implement open/close support
 TBufferedTransport.prototype.isOpen = function () {
     return true;
 };
 
-TBufferedTransport.prototype.open = function () {
-};
+TBufferedTransport.prototype.open = function () {};
 
-TBufferedTransport.prototype.close = function () {
-};
+TBufferedTransport.prototype.close = function () {};
 
 // Set the seqid of the message in the client
 // So that callbacks can be found
@@ -132,7 +129,7 @@ TBufferedTransport.prototype.readString = function (len) {
 };
 
 TBufferedTransport.prototype.borrow = function () {
-    var obj = {buf: this.inBuf, readIndex: this.readCursor, writeIndex: this.writeCursor};
+    var obj = { buf: this.inBuf, readIndex: this.readCursor, writeIndex: this.writeCursor };
     return obj;
 };
 
@@ -141,7 +138,7 @@ TBufferedTransport.prototype.consume = function (bytesConsumed) {
 };
 
 TBufferedTransport.prototype.write = function (buf) {
-    if (typeof(buf) === 'string') {
+    if (typeof buf === 'string') {
         buf = new Buffer(buf, 'utf8');
     }
     this.outBuffers.push(buf);

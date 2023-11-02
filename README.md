@@ -1,9 +1,40 @@
-# woody_js
-JS адаптация клиентской части [Библиотеки RPC вызовов для общения между микросервисами](http://coredocs.rbkmoney.com/design/ms/platform/rpc-lib/) для запуска в браузере.
+# Woody js
 
-## Publish
+Browser-Compatible Node.js Thrift Binary Protocol Connection
 
-```sh
-npm version [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
-npm publish
+## Installation
+
+```bash
+npm install @vality/woody
+```
+
+## Usage Example
+
+```typescript
+import connectClient from '@vality/woody';
+
+const host = 'localhost';
+const port = '8080';
+const path = '/some/path';
+
+// Generated Thrift client
+const genClient = {
+    /* ... your thrift client ... */
+};
+
+// Connection options
+const connectOptions = {
+    https: true,
+    // ... other options ...
+};
+
+// Error callback
+const errorCb = (err) => {
+    console.error('An error occurred:', err);
+};
+
+// Create a client connection
+const client = connectClient(host, port, path, genClient, connectOptions, errorCb);
+
+// Now you can use 'client' to interact with Thrift service
 ```

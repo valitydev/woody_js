@@ -17,7 +17,7 @@
  * under the License.
  */
 var util = require('util');
-var http = require('stream-http');
+var http = require('http');
 var https = require('https');
 var EventEmitter = require('events').EventEmitter;
 var thrift = require('./thrift');
@@ -93,7 +93,7 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
         path: this.options.path || '/',
         method: 'POST',
         headers: this.options.headers || {},
-        responseType: this.options.responseType || null
+        responseType: this.options.responseType || null,
     };
     for (var attrname in this.options.nodeOptions) {
         this.nodeOptions[attrname] = this.options.nodeOptions[attrname];
@@ -148,13 +148,15 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
                     client['recv_' + header.fname](proto, header.mtype, dummy_seqid);
                 } else {
                     delete client._reqs[dummy_seqid];
-                    const WRONG_METHOD_NAME_ERROR = new thrift.TApplicationException(thrift.TApplicationExceptionType.WRONG_METHOD_NAME, 'Received a response to an unknown RPC function');
+                    const WRONG_METHOD_NAME_ERROR = new thrift.TApplicationException(
+                        thrift.TApplicationExceptionType.WRONG_METHOD_NAME,
+                        'Received a response to an unknown RPC function',
+                    );
                     self.errorCb(WRONG_METHOD_NAME_ERROR);
                     self.emit('error', WRONG_METHOD_NAME_ERROR);
                 }
             }
-        }
-        catch (e) {
+        } catch (e) {
             if (e instanceof InputBufferUnderrunError) {
                 transport_with_data.rollbackPosition();
             } else {
@@ -163,7 +165,6 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
             }
         }
     }
-
 
     //Response handler
     //////////////////////////////////////////////////
@@ -184,8 +185,10 @@ HttpConnection = exports.HttpConnection = function (host, port, options, errorCb
             // however, when running in a Browser (e.g. Browserify), chunk
             // will be a string or an ArrayBuffer.
             response.on('data', function (chunk) {
-                if ((typeof chunk == 'string') ||
-                    (Object.prototype.toString.call(chunk) == '[object Uint8Array]')) {
+                if (
+                    typeof chunk == 'string' ||
+                    Object.prototype.toString.call(chunk) == '[object Uint8Array]'
+                ) {
                     // Wrap ArrayBuffer/string in a Buffer so data[i].copy will work
                     data.push(new Buffer(chunk));
                 } else {
@@ -221,9 +224,9 @@ HttpConnection.prototype.write = function (data) {
     self.nodeOptions.headers['Content-length'] = data.length;
     self.nodeOptions.headers['Accept'] = 'application/x-thrift';
     self.nodeOptions.headers['Content-Type'] = 'application/x-thrift';
-    var req = (self.https) ?
-        https.request(self.nodeOptions, self.responseCallback) :
-        http.request(self.nodeOptions, self.responseCallback);
+    var req = self.https
+        ? https.request(self.nodeOptions, self.responseCallback)
+        : http.request(self.nodeOptions, self.responseCallback);
     req.on('error', function (err) {
         self.errorCb(err);
         self.emit('error', err);

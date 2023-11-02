@@ -73,8 +73,8 @@ exports.writeI32 = function (buff, v) {
 exports.readDouble = function (buff, off) {
     off = off || 0;
     var signed = buff[off] & 0x80;
-    var e = (buff[off + 1] & 0xF0) >> 4;
-    e += (buff[off] & 0x7F) << 4;
+    var e = (buff[off + 1] & 0xf0) >> 4;
+    e += (buff[off] & 0x7f) << 4;
 
     var m = buff[off + 7];
     m += buff[off + 6] << 8;
@@ -82,14 +82,14 @@ exports.readDouble = function (buff, off) {
     m += buff[off + 4] * POW_24;
     m += buff[off + 3] * POW_32;
     m += buff[off + 2] * POW_40;
-    m += (buff[off + 1] & 0x0F) * POW_48;
+    m += (buff[off + 1] & 0x0f) * POW_48;
 
     switch (e) {
         case 0:
             e = -1022;
             break;
         case 2047:
-            return m ? NaN : (signed ? -Infinity : Infinity);
+            return m ? NaN : signed ? -Infinity : Infinity;
         default:
             m += POW_52;
             e -= 1023;
@@ -109,7 +109,7 @@ exports.readDouble = function (buff, off) {
 exports.writeDouble = function (buff, v) {
     var m, e, c;
 
-    buff[0] = (v < 0 ? 0x80 : 0x00);
+    buff[0] = v < 0 ? 0x80 : 0x00;
 
     v = Math.abs(v);
     if (v !== v) {
@@ -131,15 +131,13 @@ exports.writeDouble = function (buff, v) {
             // Overflow
             m = 0;
             e = 2047;
-        }
-        else if (e + 1023 >= 1) {
+        } else if (e + 1023 >= 1) {
             // Normalized - term order matters, as Math.pow(2, 52-e) and v*Math.pow(2, 52) can overflow
             m = (v * c - 1) * POW_52;
             e += 1023;
-        }
-        else {
+        } else {
             // Denormalized - also catches the '0' case, somewhat by chance
-            m = (v * POW_1022) * POW_52;
+            m = v * POW_1022 * POW_52;
             e = 0;
         }
     }
